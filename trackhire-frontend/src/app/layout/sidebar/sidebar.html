@@ -1,6 +1,6 @@
 <div class="sidebar">
   <div class="sidebar-logo">
-    <h1>JobTrack</h1>
+    <h1>TrackHire</h1>
   </div>
 
   <nav class="sidebar-nav">
@@ -28,11 +28,17 @@
 
   <div class="sidebar-footer">
     <div class="sidebar-user">
-      <div class="sidebar-avatar">JD</div>
+      <div class="sidebar-avatar">{{ userInitials }}</div>
       <div class="sidebar-user-info">
-        <p>John Doe</p>
-        <p>john@example.com</p>
+        <p>{{ userName || 'User' }}</p>
+        <p>{{ userEmail || 'user@email.com' }}</p>
       </div>
     </div>
+    <button class="sidebar-logout-btn" (click)="logout()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+      </svg>
+      <span>Logout</span>
+    </button>
   </div>
 </div>

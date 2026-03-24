@@ -1,8 +1,32 @@
 <div class="job-card">
   <div class="job-card-header">
     <h4>{{ title }}</h4>
-    <div class="status-dot" [ngClass]="status"></div>
+    <div class="job-card-actions-wrapper">
+      <button class="job-card-menu-btn" (click)="toggleActions()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>
+        </svg>
+      </button>
+      <div class="job-card-dropdown" *ngIf="showActions">
+        <select [ngModel]="status" (ngModelChange)="onStatusChange($event)" class="status-select">
+          <option value="saved">Saved</option>
+          <option value="applied">Applied</option>
+          <option value="interview">Interview</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="job-card-delete-btn" (click)="onDelete()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
   </div>
   <p class="job-card-company">{{ company }} • {{ location }}</p>
-  <span class="job-card-date">{{ formattedDate }}</span>
+  <div class="job-card-footer">
+    <span class="job-card-date">{{ formattedDate }}</span>
+    <div class="status-dot" [ngClass]="status"></div>
+  </div>
 </div>

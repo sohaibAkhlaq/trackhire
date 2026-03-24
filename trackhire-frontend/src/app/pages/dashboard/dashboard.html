@@ -4,8 +4,18 @@
 <div class="main-content">
 
   <div class="dashboard-header">
-    <h1>Job Applications</h1>
-    <p>Track your job search progress</p>
+    <div class="header-row">
+      <div>
+        <h1>Job Applications</h1>
+        <p>Track your job search progress</p>
+      </div>
+      <button class="add-job-btn" (click)="openAddModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Add Job
+      </button>
+    </div>
   </div>
 
   <div class="search-bar">
@@ -13,7 +23,8 @@
   </div>
 
   <div *ngIf="loading" class="loading-state">
-    Loading your jobs...
+    <div class="loading-spinner"></div>
+    <p>Loading your jobs...</p>
   </div>
 
   <div *ngIf="!loading" class="kanban-board">
@@ -24,12 +35,15 @@
         <span class="column-count">{{ savedJobs.length }}</span>
       </div>
       <div class="column-cards">
-        <app-job-card *ngFor="let job of savedJobs" 
-                      [title]="job.title" 
-                      [company]="job.company" 
-                      [location]="job.location" 
-                      [appliedDate]="job.appliedDate" 
-                      [status]="job.status">
+        <app-job-card *ngFor="let job of savedJobs"
+                      [id]="job._id"
+                      [title]="job.title"
+                      [company]="job.company"
+                      [location]="job.location"
+                      [appliedDate]="job.appliedDate"
+                      [status]="job.status"
+                      (deleteJob)="deleteJob($event)"
+                      (statusChange)="updateJobStatus($event)">
         </app-job-card>
         <div *ngIf="savedJobs.length === 0" class="empty-state">No saved jobs</div>
       </div>
@@ -41,12 +55,15 @@
         <span class="column-count blue">{{ appliedJobs.length }}</span>
       </div>
       <div class="column-cards">
-        <app-job-card *ngFor="let job of appliedJobs" 
-                      [title]="job.title" 
-                      [company]="job.company" 
-                      [location]="job.location" 
-                      [appliedDate]="job.appliedDate" 
-                      [status]="job.status">
+        <app-job-card *ngFor="let job of appliedJobs"
+                      [id]="job._id"
+                      [title]="job.title"
+                      [company]="job.company"
+                      [location]="job.location"
+                      [appliedDate]="job.appliedDate"
+                      [status]="job.status"
+                      (deleteJob)="deleteJob($event)"
+                      (statusChange)="updateJobStatus($event)">
         </app-job-card>
         <div *ngIf="appliedJobs.length === 0" class="empty-state">No applied jobs</div>
       </div>
@@ -58,12 +75,15 @@
         <span class="column-count green">{{ interviewJobs.length }}</span>
       </div>
       <div class="column-cards">
-        <app-job-card *ngFor="let job of interviewJobs" 
-                      [title]="job.title" 
-                      [company]="job.company" 
-                      [location]="job.location" 
-                      [appliedDate]="job.appliedDate" 
-                      [status]="job.status">
+        <app-job-card *ngFor="let job of interviewJobs"
+                      [id]="job._id"
+                      [title]="job.title"
+                      [company]="job.company"
+                      [location]="job.location"
+                      [appliedDate]="job.appliedDate"
+                      [status]="job.status"
+                      (deleteJob)="deleteJob($event)"
+                      (statusChange)="updateJobStatus($event)">
         </app-job-card>
         <div *ngIf="interviewJobs.length === 0" class="empty-state">No interviews</div>
       </div>
@@ -75,12 +95,15 @@
         <span class="column-count green">{{ offerJobs.length }}</span>
       </div>
       <div class="column-cards">
-        <app-job-card *ngFor="let job of offerJobs" 
-                      [title]="job.title" 
-                      [company]="job.company" 
-                      [location]="job.location" 
-                      [appliedDate]="job.appliedDate" 
-                      [status]="job.status">
+        <app-job-card *ngFor="let job of offerJobs"
+                      [id]="job._id"
+                      [title]="job.title"
+                      [company]="job.company"
+                      [location]="job.location"
+                      [appliedDate]="job.appliedDate"
+                      [status]="job.status"
+                      (deleteJob)="deleteJob($event)"
+                      (statusChange)="updateJobStatus($event)">
         </app-job-card>
         <div *ngIf="offerJobs.length === 0" class="empty-state">No offers</div>
       </div>
@@ -92,12 +115,15 @@
         <span class="column-count red">{{ rejectedJobs.length }}</span>
       </div>
       <div class="column-cards">
-        <app-job-card *ngFor="let job of rejectedJobs" 
-                      [title]="job.title" 
-                      [company]="job.company" 
-                      [location]="job.location" 
-                      [appliedDate]="job.appliedDate" 
-                      [status]="job.status">
+        <app-job-card *ngFor="let job of rejectedJobs"
+                      [id]="job._id"
+                      [title]="job.title"
+                      [company]="job.company"
+                      [location]="job.location"
+                      [appliedDate]="job.appliedDate"
+                      [status]="job.status"
+                      (deleteJob)="deleteJob($event)"
+                      (statusChange)="updateJobStatus($event)">
         </app-job-card>
         <div *ngIf="rejectedJobs.length === 0" class="empty-state">No rejections</div>
       </div>
@@ -106,3 +132,10 @@
   </div>
 
 </div>
+
+<!-- Add Job Modal -->
+<app-add-job-modal
+  *ngIf="showAddModal"
+  (jobAdded)="onJobAdded()"
+  (closeModal)="closeAddModal()">
+</app-add-job-modal>

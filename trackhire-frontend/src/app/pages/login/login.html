@@ -8,9 +8,11 @@
     <h1>Welcome back</h1>
     <p>Log in to track your applications</p>
 
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
     <div class="input-group">
       <label>Email</label>
-      <input type="email" [(ngModel)]="email" placeholder="hello@company.com">
+      <input type="email" [(ngModel)]="email" placeholder="hello&#64;company.com" (keyup.enter)="onLogin()">
     </div>
 
     <div class="input-group">
@@ -18,10 +20,13 @@
         <label>Password</label>
         <a href="#">Forgot password?</a>
       </div>
-      <input type="password" [(ngModel)]="password" placeholder="••••••••">
+      <input type="password" [(ngModel)]="password" placeholder="••••••••" (keyup.enter)="onLogin()">
     </div>
 
-    <button class="login-btn" (click)="onLogin()">Sign in</button>
+    <button class="login-btn" (click)="onLogin()" [disabled]="loading">
+      <span *ngIf="loading" class="spinner"></span>
+      {{ loading ? 'Signing in...' : 'Sign in' }}
+    </button>
 
     <div class="divider">
       <div class="divider-line"></div>

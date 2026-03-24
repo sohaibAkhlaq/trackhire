@@ -3,22 +3,27 @@
     <h1>Create Account</h1>
     <p>Start tracking your job applications</p>
 
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
     <div class="input-group">
       <label>Full Name</label>
-      <input type="text" [(ngModel)]="name" placeholder="John Doe">
+      <input type="text" [(ngModel)]="name" placeholder="John Doe" (keyup.enter)="onRegister()">
     </div>
 
     <div class="input-group">
       <label>Email</label>
-      <input type="email" [(ngModel)]="email" placeholder="hello@company.com">
+      <input type="email" [(ngModel)]="email" placeholder="hello&#64;company.com" (keyup.enter)="onRegister()">
     </div>
 
     <div class="input-group">
       <label>Password</label>
-      <input type="password" [(ngModel)]="password" placeholder="Create a password">
+      <input type="password" [(ngModel)]="password" placeholder="Create a password (min. 6 characters)" (keyup.enter)="onRegister()">
     </div>
 
-    <button class="register-btn" (click)="onRegister()">Sign up</button>
+    <button class="register-btn" (click)="onRegister()" [disabled]="loading">
+      <span *ngIf="loading" class="spinner"></span>
+      {{ loading ? 'Creating account...' : 'Sign up' }}
+    </button>
 
     <p class="login-link">
       Already have an account?

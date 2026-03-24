@@ -4,23 +4,42 @@ const Job = require('../models/job');
 const getJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ userId: req.userId }).sort({ createdAt: -1 });
-    res.json(jobs);
+    res.status(200).json(jobs);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Get jobs error:', error);
+    res.status(500).json({ error: 'Failed to fetch jobs' });
   }
 };
 
 // Create job
 const createJob = async (req, res) => {
   try {
+    console.log('Incoming createJob request from UI. User:', req.userId);
+    console.log('Request body:', req.body);
+    
+    const { title, company, location, status, appliedDate } = req.body;
+
+    // Validate required fields
+    if (!title || !company || !location) {
+      console.log('Validation failed. Missing required fields.');
+      return res.status(400).json({ error: 'Title, company and location are required' });
+    }
+
     const job = new Job({
-      ...req.body,
+      title,
+      company,
+      location,
+      status: status || 'saved',
+      appliedDate: appliedDate || new Date(),
       userId: req.userId
     });
+
     await job.save();
+    console.log('Job created:', job._id, 'for user:', req.userId);
     res.status(201).json(job);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Create job error:', error);
+    res.status(500).json({ error: 'Failed to create job' });
   }
 };
 
@@ -35,9 +54,10 @@ const updateJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ error: 'Job not found' });
     }
-    res.json(job);
+    res.status(200).json(job);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Update job error:', error);
+    res.status(500).json({ error: 'Failed to update job' });
   }
 };
 
@@ -48,9 +68,10 @@ const deleteJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ error: 'Job not found' });
     }
-    res.json({ message: 'Job deleted successfully' });
+    res.status(200).json({ message: 'Job deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Delete job error:', error);
+    res.status(500).json({ error: 'Failed to delete job' });
   }
 };
 
@@ -58,7 +79,7 @@ const deleteJob = async (req, res) => {
 const getStats = async (req, res) => {
   try {
     const jobs = await Job.find({ userId: req.userId });
-    
+
     const stats = {
       total: jobs.length,
       saved: jobs.filter(j => j.status === 'saved').length,
@@ -67,12 +88,12 @@ const getStats = async (req, res) => {
       offer: jobs.filter(j => j.status === 'offer').length,
       rejected: jobs.filter(j => j.status === 'rejected').length
     };
-    
-    res.json(stats);
+
+    res.status(200).json(stats);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Get stats error:', error);
+    res.status(500).json({ error: 'Failed to fetch stats' });
   }
 };
 
-// Export all functions
 module.exports = { getJobs, createJob, updateJob, deleteJob, getStats };

@@ -26,11 +26,31 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  saveUser(user: { name: string; email: string }): void {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getUser(): { name: string; email: string } | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+
+  getUserInitials(): string {
+    const user = this.getUser();
+    if (!user || !user.name) return '??';
+    const parts = user.name.trim().split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return parts[0].substring(0, 2).toUpperCase();
+  }
+
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 }

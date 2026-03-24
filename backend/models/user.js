@@ -22,30 +22,24 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// Hash password before saving - FIXED VERSION
-userSchema.pre('save', function(next) {
-  const user = this;
-  
-  // Only hash if password is modified
-  if (!user.isModified('password')) {
-    return next();
+// Hash password before saving
+// Mongoose 9: async pre hooks must NOT use next() — just return or throw
+userSchema.pre('save', async function() {
+  if (!this.isModified('password')) {
+    return;
   }
-  
-  // Hash password
-  bcrypt.genSalt(10, function(err, salt) {
-    if (err) return next(err);
-    
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) return next(err);
-      user.password = hash;
-      next();
-    });
-  });
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Compare password method
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+  try {
+    return await bcrypt.compare(candidatePassword, this.password);
+  } catch (error) {
+    console.error('Password compare error:', error);
+    return false;
+  }
 };
 
 module.exports = mongoose.model('User', userSchema);

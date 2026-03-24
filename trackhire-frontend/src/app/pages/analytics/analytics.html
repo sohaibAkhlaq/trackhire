@@ -8,93 +8,100 @@
     <p>Track your application statistics</p>
   </div>
 
-  <div class="stats-grid">
-    <div class="stat-card">
-      <p class="stat-label">Total Applications</p>
-      <p class="stat-value">48</p>
-    </div>
-    <div class="stat-card">
-      <p class="stat-label">Interviews</p>
-      <p class="stat-value primary">12</p>
-    </div>
-    <div class="stat-card">
-      <p class="stat-label">Offer Rate</p>
-      <p class="stat-value">24%</p>
-    </div>
-    <div class="stat-card">
-      <p class="stat-label">Response Rate</p>
-      <p class="stat-value">68%</p>
-    </div>
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Loading analytics...</p>
   </div>
 
-  <div class="charts-grid">
-    <div class="chart-card">
-      <h3>Application Status</h3>
-      <div class="status-list">
-        <div class="status-item">
-          <span class="status-name">Saved</span>
-          <div class="status-bar-container"><div class="status-bar saved"></div></div>
-          <span class="status-count">8</span>
+  <div *ngIf="!loading">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <p class="stat-label">Total Applications</p>
+        <p class="stat-value">{{ total }}</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Interviews</p>
+        <p class="stat-value primary">{{ interview }}</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Offer Rate</p>
+        <p class="stat-value">{{ offerRate }}%</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Response Rate</p>
+        <p class="stat-value">{{ responseRate }}%</p>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Application Status</h3>
+        <div class="status-list">
+          <div class="status-item">
+            <span class="status-name">Saved</span>
+            <div class="status-bar-container"><div class="status-bar saved" [style.width]="getBarWidth(saved)"></div></div>
+            <span class="status-count">{{ saved }}</span>
+          </div>
+          <div class="status-item">
+            <span class="status-name">Applied</span>
+            <div class="status-bar-container"><div class="status-bar applied" [style.width]="getBarWidth(applied)"></div></div>
+            <span class="status-count">{{ applied }}</span>
+          </div>
+          <div class="status-item">
+            <span class="status-name">Interview</span>
+            <div class="status-bar-container"><div class="status-bar interview" [style.width]="getBarWidth(interview)"></div></div>
+            <span class="status-count">{{ interview }}</span>
+          </div>
+          <div class="status-item">
+            <span class="status-name">Offer</span>
+            <div class="status-bar-container"><div class="status-bar offer" [style.width]="getBarWidth(offer)"></div></div>
+            <span class="status-count">{{ offer }}</span>
+          </div>
+          <div class="status-item">
+            <span class="status-name">Rejected</span>
+            <div class="status-bar-container"><div class="status-bar rejected" [style.width]="getBarWidth(rejected)"></div></div>
+            <span class="status-count">{{ rejected }}</span>
+          </div>
         </div>
-        <div class="status-item">
-          <span class="status-name">Applied</span>
-          <div class="status-bar-container"><div class="status-bar applied"></div></div>
-          <span class="status-count">20</span>
-        </div>
-        <div class="status-item">
-          <span class="status-name">Interview</span>
-          <div class="status-bar-container"><div class="status-bar interview"></div></div>
-          <span class="status-count">12</span>
-        </div>
-        <div class="status-item">
-          <span class="status-name">Offer</span>
-          <div class="status-bar-container"><div class="status-bar offer"></div></div>
-          <span class="status-count">4</span>
-        </div>
-        <div class="status-item">
-          <span class="status-name">Rejected</span>
-          <div class="status-bar-container"><div class="status-bar rejected"></div></div>
-          <span class="status-count">4</span>
+      </div>
+
+      <div class="chart-card">
+        <h3>Weekly Activity</h3>
+        <div class="weekly-bars">
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 40px"></div><span>Mon</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 64px"></div><span>Tue</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 96px"></div><span>Wed</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 72px"></div><span>Thu</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 120px"></div><span>Fri</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 56px"></div><span>Sat</span></div>
+          <div class="weekly-bar-item"><div class="weekly-bar" style="height: 32px"></div><span>Sun</span></div>
         </div>
       </div>
     </div>
 
-    <div class="chart-card">
-      <h3>Weekly Activity</h3>
-      <div class="weekly-bars">
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 40px"></div><span>Mon</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 64px"></div><span>Tue</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 96px"></div><span>Wed</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 72px"></div><span>Thu</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 120px"></div><span>Fri</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 56px"></div><span>Sat</span></div>
-        <div class="weekly-bar-item"><div class="weekly-bar" style="height: 32px"></div><span>Sun</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="activity-card">
-    <h3>Recent Activity Feed</h3>
-    <div class="activity-list">
-      <div class="activity-item">
-        <div class="activity-dot blue"></div>
-        <div class="activity-content">
-          <p>Applied to <strong>Stripe</strong> for Product Designer</p>
-          <span>2 hours ago</span>
+    <div class="activity-card">
+      <h3>Summary</h3>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-dot blue"></div>
+          <div class="activity-content">
+            <p>You have <strong>{{ total }}</strong> total applications tracked</p>
+            <span>{{ interview }} interviews scheduled</span>
+          </div>
         </div>
-      </div>
-      <div class="activity-item">
-        <div class="activity-dot green"></div>
-        <div class="activity-content">
-          <p>Interview scheduled with <strong>Figma</strong> for Senior Designer</p>
-          <span>Yesterday</span>
+        <div class="activity-item">
+          <div class="activity-dot green"></div>
+          <div class="activity-content">
+            <p>Your offer rate is <strong>{{ offerRate }}%</strong></p>
+            <span>{{ offer }} offers received</span>
+          </div>
         </div>
-      </div>
-      <div class="activity-item">
-        <div class="activity-dot red"></div>
-        <div class="activity-content">
-          <p>Rejected from <strong>Google</strong> for UX Engineer</p>
-          <span>2 days ago</span>
+        <div class="activity-item">
+          <div class="activity-dot red"></div>
+          <div class="activity-content">
+            <p>Response rate is <strong>{{ responseRate }}%</strong></p>
+            <span>{{ rejected }} rejections so far</span>
+          </div>
         </div>
       </div>
     </div>

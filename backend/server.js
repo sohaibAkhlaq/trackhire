@@ -13,7 +13,13 @@ console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'Set' : 'NOT SET');
 
 const app = express();
 
-app.use(cors());
+// CORS - allow Angular dev server
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
+// Parse JSON bodies
 app.use(express.json());
 
 // MongoDB Connection
@@ -27,6 +33,12 @@ app.use('/api/jobs', require('./routes/jobs'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'TrackHire API is running' });
+});
+
+// Global error handler for Express 5
+app.use((err, req, res, next) => {
+  console.error('Global error:', err);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
 const PORT = process.env.PORT || 5000;

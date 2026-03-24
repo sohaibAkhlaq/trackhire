@@ -26,7 +26,11 @@ export class RegisterComponent {
   onRegister() {
     if (!this.name || !this.email || !this.password) {
       this.error = 'Please fill all fields';
-      alert(this.error);
+      return;
+    }
+
+    if (this.password.length < 6) {
+      this.error = 'Password must be at least 6 characters';
       return;
     }
 
@@ -35,19 +39,16 @@ export class RegisterComponent {
 
     this.authService.register(this.name, this.email, this.password).subscribe({
       next: (response: any) => {
-        console.log('Registration successful:', response);
         if (response && response.token) {
           this.authService.saveToken(response.token);
+          this.authService.saveUser(response.user);
           this.loading = false;
-          alert('Registration successful! Welcome to TrackHire!');
           this.router.navigate(['/dashboard']);
         }
       },
       error: (err: any) => {
-        console.error('Registration error:', err);
         this.loading = false;
         this.error = err.error?.error || 'Registration failed. Please try again.';
-        alert(this.error);
       }
     });
   }

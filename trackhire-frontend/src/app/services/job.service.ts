@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,32 +8,25 @@ import { AuthService } from './auth.service';
 export class JobService {
   private apiUrl = 'http://localhost:5000/api/jobs';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
-
-  private getHeaders(): HttpHeaders {
-    const token = this.authService.getToken();
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getJobs(): Observable<any> {
-    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get(this.apiUrl);
   }
 
   createJob(job: any): Observable<any> {
-    return this.http.post(this.apiUrl, job, { headers: this.getHeaders() });
+    return this.http.post(this.apiUrl, job);
   }
 
   updateJob(id: string, job: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, job, { headers: this.getHeaders() });
+    return this.http.put(`${this.apiUrl}/${id}`, job);
   }
 
   deleteJob(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   getStats(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/stats`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/stats`);
   }
 }

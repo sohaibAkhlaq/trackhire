@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,14 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   pageTitle: string = 'Job Applications';
+  userInitials: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.userInitials = this.authService.getUserInitials();
+  }
 
   ngOnInit() {
     this.router.events.subscribe((event) => {

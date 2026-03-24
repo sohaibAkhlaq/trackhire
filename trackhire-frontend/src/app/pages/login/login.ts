@@ -25,7 +25,6 @@ export class LoginComponent {
   onLogin() {
     if (!this.email || !this.password) {
       this.error = 'Please enter email and password';
-      alert(this.error);
       return;
     }
 
@@ -34,24 +33,21 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password).subscribe({
       next: (response: any) => {
-        console.log('Login successful:', response);
         if (response && response.token) {
           this.authService.saveToken(response.token);
+          this.authService.saveUser(response.user);
           this.loading = false;
-          alert('Login successful! Welcome back!');
           this.router.navigate(['/dashboard']);
         }
       },
       error: (err: any) => {
-        console.error('Login error:', err);
         this.loading = false;
         this.error = err.error?.error || 'Login failed. Please check your credentials.';
-        alert(this.error);
       }
     });
   }
 
   onGoogleLogin() {
-    alert('Google login coming soon');
+    this.error = 'Google login coming soon!';
   }
 }

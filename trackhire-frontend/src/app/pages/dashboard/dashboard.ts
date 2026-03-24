@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { SidebarComponent } from '../../layout/sidebar/sidebar';
 import { NavbarComponent } from '../../layout/navbar/navbar';
 import { JobCardComponent } from '../../components/job-card/job-card';
+import { AddJobModalComponent } from '../../components/add-job-modal/add-job-modal';
 import { JobService } from '../../services/job.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, NavbarComponent, JobCardComponent],
+  imports: [CommonModule, SidebarComponent, NavbarComponent, JobCardComponent, AddJobModalComponent],
   templateUrl: './dashboard.html',
   styleUrls: []
 })
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
   offerJobs: any[] = [];
   rejectedJobs: any[] = [];
   loading: boolean = true;
+  showAddModal: boolean = false;
 
   constructor(
     private jobService: JobService,
@@ -29,10 +31,6 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
     this.loadJobs();
   }
 
@@ -46,16 +44,38 @@ export class DashboardComponent implements OnInit {
         this.offerJobs = jobs.filter(j => j.status === 'offer');
         this.rejectedJobs = jobs.filter(j => j.status === 'rejected');
         this.loading = false;
-        console.log('Jobs loaded:', jobs.length);
       },
       error: (err) => {
         console.error('Error loading jobs:', err);
         this.loading = false;
-        if (err.status === 401) {
-          this.authService.logout();
-          this.router.navigate(['/login']);
-        }
       }
+    });
+  }
+
+  openAddModal() {
+    this.showAddModal = true;
+  }
+
+  closeAddModal() {
+    this.showAddModal = false;
+  }
+
+  onJobAdded() {
+    this.loadJobs();
+    this.showAddModal = false;
+  }
+
+  deleteJob(id: string) {
+    this.jobService.deleteJob(id).subscribe({
+      next: () => this.loadJobs(),
+      error: (err) => console.error('Error deleting job:', err)
+    });
+  }
+
+  updateJobStatus(event: { id: string; status: string }) {
+    this.jobService.updateJob(event.id, { status: event.status }).subscribe({
+      next: () => this.loadJobs(),
+      error: (err) => console.error('Error updating job:', err)
     });
   }
 }

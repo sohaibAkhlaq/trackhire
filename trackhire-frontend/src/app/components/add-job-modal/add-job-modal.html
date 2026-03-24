@@ -1,0 +1,90 @@
+<!-- Modal Backdrop -->
+<div class="modal-overlay" (click)="close()">
+  
+  <!-- Modal Content -->
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h2>Add New Job Application</h2>
+      <button class="close-btn" (click)="close()">✕</button>
+    </div>
+    
+    <form (ngSubmit)="onSubmit()" #jobForm="ngForm">
+      
+      <div class="form-group">
+        <label>Job Title *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="job.title" 
+          name="title"
+          required
+          placeholder="e.g., Senior Frontend Engineer"
+          #title="ngModel"
+        >
+        <div class="error" *ngIf="title.invalid && title.touched">
+          Job title is required
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Company *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="job.company" 
+          name="company"
+          required
+          placeholder="e.g., Google, Spotify, Microsoft"
+          #company="ngModel"
+        >
+        <div class="error" *ngIf="company.invalid && company.touched">
+          Company name is required
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Location *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="job.location" 
+          name="location"
+          required
+          placeholder="e.g., Remote, New York, London"
+          #location="ngModel"
+        >
+        <div class="error" *ngIf="location.invalid && location.touched">
+          Location is required
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Status *</label>
+        <select [(ngModel)]="job.status" name="status">
+          <option value="saved">Saved</option>
+          <option value="applied">Applied</option>
+          <option value="interview">Interview</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Applied Date</label>
+        <input 
+          type="date" 
+          [(ngModel)]="job.appliedDate" 
+          name="appliedDate"
+        >
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="close()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="jobForm.invalid || loading">
+          {{ loading ? 'Adding...' : 'Add Job' }}
+        </button>
+      </div>
+      
+    </form>
+    
+  </div>
+  
+</div>
