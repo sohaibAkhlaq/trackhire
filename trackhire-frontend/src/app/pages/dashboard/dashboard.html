@@ -1,0 +1,108 @@
+<app-sidebar></app-sidebar>
+<app-navbar></app-navbar>
+
+<div class="main-content">
+
+  <div class="dashboard-header">
+    <h1>Job Applications</h1>
+    <p>Track your job search progress</p>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search applications...">
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    Loading your jobs...
+  </div>
+
+  <div *ngIf="!loading" class="kanban-board">
+
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Saved</h3>
+        <span class="column-count">{{ savedJobs.length }}</span>
+      </div>
+      <div class="column-cards">
+        <app-job-card *ngFor="let job of savedJobs" 
+                      [title]="job.title" 
+                      [company]="job.company" 
+                      [location]="job.location" 
+                      [appliedDate]="job.appliedDate" 
+                      [status]="job.status">
+        </app-job-card>
+        <div *ngIf="savedJobs.length === 0" class="empty-state">No saved jobs</div>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Applied</h3>
+        <span class="column-count blue">{{ appliedJobs.length }}</span>
+      </div>
+      <div class="column-cards">
+        <app-job-card *ngFor="let job of appliedJobs" 
+                      [title]="job.title" 
+                      [company]="job.company" 
+                      [location]="job.location" 
+                      [appliedDate]="job.appliedDate" 
+                      [status]="job.status">
+        </app-job-card>
+        <div *ngIf="appliedJobs.length === 0" class="empty-state">No applied jobs</div>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Interview</h3>
+        <span class="column-count green">{{ interviewJobs.length }}</span>
+      </div>
+      <div class="column-cards">
+        <app-job-card *ngFor="let job of interviewJobs" 
+                      [title]="job.title" 
+                      [company]="job.company" 
+                      [location]="job.location" 
+                      [appliedDate]="job.appliedDate" 
+                      [status]="job.status">
+        </app-job-card>
+        <div *ngIf="interviewJobs.length === 0" class="empty-state">No interviews</div>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Offer</h3>
+        <span class="column-count green">{{ offerJobs.length }}</span>
+      </div>
+      <div class="column-cards">
+        <app-job-card *ngFor="let job of offerJobs" 
+                      [title]="job.title" 
+                      [company]="job.company" 
+                      [location]="job.location" 
+                      [appliedDate]="job.appliedDate" 
+                      [status]="job.status">
+        </app-job-card>
+        <div *ngIf="offerJobs.length === 0" class="empty-state">No offers</div>
+      </div>
+    </div>
+
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Rejected</h3>
+        <span class="column-count red">{{ rejectedJobs.length }}</span>
+      </div>
+      <div class="column-cards">
+        <app-job-card *ngFor="let job of rejectedJobs" 
+                      [title]="job.title" 
+                      [company]="job.company" 
+                      [location]="job.location" 
+                      [appliedDate]="job.appliedDate" 
+                      [status]="job.status">
+        </app-job-card>
+        <div *ngIf="rejectedJobs.length === 0" class="empty-state">No rejections</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

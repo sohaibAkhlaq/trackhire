@@ -1,0 +1,28 @@
+<div class="register-container">
+  <div class="register-card">
+    <h1>Create Account</h1>
+    <p>Start tracking your job applications</p>
+
+    <div class="input-group">
+      <label>Full Name</label>
+      <input type="text" [(ngModel)]="name" placeholder="John Doe">
+    </div>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" placeholder="hello@company.com">
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" placeholder="Create a password">
+    </div>
+
+    <button class="register-btn" (click)="onRegister()">Sign up</button>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</div>
