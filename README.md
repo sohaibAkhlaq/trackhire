@@ -100,10 +100,10 @@ ng serve
 ```
 
 ## 📸 Screenshots & UI Previews
-*(Add your stunning application screenshots here!)*
-- **Dashboard View**: Showcase the Kanban columns.
-- **Analytics View**: Highlight the data visualizer bars.
-- **Auth Pages**: Show the polished auth cards.
+- **Dashboard View**: <img width="1900" height="895" alt="image" src="https://github.com/user-attachments/assets/e381425b-4ed9-46d6-99f1-1fe48717fa49" />
+
+- **Analytics View**: <img width="1869" height="884" alt="image" src="https://github.com/user-attachments/assets/d65a6fd5-b79d-4999-af15-2587729c8e13" />
+
 
 ## Video Link
 - https://drive.google.com/file/d/13Q9E5ffqivArwiH6Gg2xkSYpYgxnRhZ1/view?usp=drive_link
