@@ -11,8 +11,6 @@
   <h1 align="center"> TrackHire</h1>
 
   <p align="center">
-    <strong>A Premium AI-Powered Job Application Tracker SaaS</strong>
-    <br />
     Manage, Track, and Optimize your Job Search beautifully.
   </p>
 </div>
