@@ -105,6 +105,9 @@ ng serve
 - **Analytics View**: Highlight the data visualizer bars.
 - **Auth Pages**: Show the polished auth cards.
 
+## Video Link
+- https://drive.google.com/file/d/13Q9E5ffqivArwiH6Gg2xkSYpYgxnRhZ1/view?usp=drive_link
+
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/sohaibAkhlaq/trackhire/issues).
 
