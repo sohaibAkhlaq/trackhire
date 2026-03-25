@@ -8,7 +8,7 @@
   <br />
   <br />
 
-  <h1 align="center">🚀 TrackHire</h1>
+  <h1 align="center"> TrackHire</h1>
 
   <p align="center">
     <strong>A Premium AI-Powered Job Application Tracker SaaS</strong>
